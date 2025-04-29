@@ -43,6 +43,23 @@ def load_grid_from_csv():
                     print(f"⚠️ Skipping invalid row: {row}")
     return grid
 
+def set_warehouse_size():
+    global WAREHOUSE_ROWS, WAREHOUSE_COLS
+    while True:
+        try:
+            rows = int(input("Enter the number of rows for the warehouse (1-10): "))
+            cols = int(input("Enter the number of columns for the warehouse (1-10): "))
+            if 1 <= rows <= 10 and 1 <= cols <= 10:
+                WAREHOUSE_ROWS = rows
+                WAREHOUSE_COLS = cols
+                clear_terminal()
+                print(f"Warehouse size updated to {WAREHOUSE_ROWS}x{WAREHOUSE_COLS}.")
+                break
+            else:
+                print("Rows and columns must be between 1 and 10.")
+        except ValueError:
+            print("Invalid input. Please enter valid numbers.")
+
 def main():
     clear_terminal()
     print('-----------------------------')
@@ -50,9 +67,10 @@ def main():
     print('-----------------------------')
     print('Please enter desired location')
     print('1. Edit Warehouse')
-    print('2. Veiw Warehouse')
-    print('3. Exit')
-    choice = input('(1,2,3): ')
+    print('2. View Warehouse')
+    print('3. Set Warehouse Size')
+    print('4. Exit')
+    choice = input('(1,2,3,4): ')
     if choice == '1':
         clear_terminal()
         edit_warehouse()
@@ -61,11 +79,15 @@ def main():
         view_warehouse()
     elif choice == '3':
         clear_terminal()
+        set_warehouse_size()
+        main()
+    elif choice == '4':
+        clear_terminal()
         print('Bye')
     else:
         clear_terminal()
-        print('you have inputed an incorrect value')
-        y = input('return or exit (an incorrect input will result in exit) R/E: ').capitalize()
+        print('You have inputted an incorrect value')
+        y = input('Return or exit (an incorrect input will result in exit) R/E: ').capitalize()
         if y == 'R':
             main()
         else:
@@ -172,7 +194,6 @@ def view_item():
             print("Invalid input. Please enter valid row and column numbers.")
     Return()
 
-
 def edit_warehouse():
     grid = load_grid_from_csv()
     print('-- In which way will you be editing the warehouse --')
@@ -277,7 +298,6 @@ def remove_item():
             print("Invalid input. Please enter valid row and column numbers.")
     Return()
 
-
 def edit_item():
     grid = load_grid_from_csv()  
     print("--- Current Warehouse ---")
@@ -322,6 +342,5 @@ def edit_item():
         except ValueError:
             print("Invalid input. Please enter valid row and column numbers.")
     Return()
-
 
 main()
