@@ -217,10 +217,14 @@ def add_item(grid):
     while True:
         amt = input('Quantity: ')
         if amt.isdigit():
-            break
+            if int(amt) <= 25:
+                break
+            else:
+                clear_terminal()
+                print('Please enter a number less than or equal to 25.')
         else:
             clear_terminal()
-            print('Invalid input, please try again.')
+            print('Invalid input, please enter a number.')
 
     while True:
         try:
@@ -296,18 +300,23 @@ def edit_item():
 
                 new_name = input(f"New Name (current: {product.product_name}): ") or product.product_name
                 new_price = input(f"New Price (current: {product.price}): ") or product.price
-                new_amt = input(f"New Quantity (current: {product.amt}): ")
-                if new_amt.isdigit():
-                    new_amt = int(new_amt)
-                else:
-                    new_amt = product.amt
+                while True:
+                    new_amt = input(f"New Quantity (current: {product.amt}): ")
+                    if new_amt == "":
+                        new_amt = product.amt
+                        break
+                    elif new_amt.isdigit() and int(new_amt) <= 25:
+                        new_amt = int(new_amt)
+                        break
+                    else:
+                        print("Invalid quantity. Please enter a number up to 25.")
 
                 product.product_name = new_name
                 product.price = new_price
                 product.amt = new_amt
 
                 save_grid_to_csv(grid)
-
+                clear_terminal()
                 print("Product updated successfully.")
                 break
         except ValueError:
