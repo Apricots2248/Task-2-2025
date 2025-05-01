@@ -8,6 +8,9 @@ def Return():
     x = input('do you wish to return to the main program or end program R/E: ').capitalize()
     if x == 'R':
         main()
+    elif x == 'E':
+        clear_terminal()
+        print('bye')
     else:
         clear_terminal()
         print('invalid input')
